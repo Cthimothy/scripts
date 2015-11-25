@@ -1,0 +1,16 @@
+<!doctype html>
+<body>
+<title>bwmon v0.2</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <h1>Ashton Broadband Monitor</h1>
+  <div class=metanav>
+  </div>
+  {% block body %}
+  {% for i in images %}
+  {# <h2>Generated at : {{ dt }}</h2> #}
+    <img src="static/images/{{ i }}">
+  {% endfor %}
+{% endblock %}
+</div>
+</body>
