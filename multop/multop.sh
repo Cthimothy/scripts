@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+pids=; foo=; htop_args=; 
 if [ -z ${1} ]
    then
        echo "Usage :  multop [process name]"
