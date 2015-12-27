@@ -7,6 +7,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *  
 from PyQt4.QtWebKit import *  
 from lxml import html 
+import requests
 
 class Render(QWebPage):  
   def __init__(self, url):  
@@ -49,25 +50,33 @@ if DEBUG is (1 or 2):
 
 r = band_name.replace(' ', '+')
 ma_url = 'http://www.metal-archives.com/search?searchString=' + r  + '&type=band_name'
-#print ma_url
+print "ma_url: ", ma_url
 
-md = Render(ma_url)
-ma_data = md.frame.toHtml()
-ma_formatted_result = str(ma_data.toAscii())
+#BAD CODE FROM HERE
 
-#Next build lxml tree from formatted_result
-ma_tree = html.fromstring(ma_formatted_result)
-#band_country = tree.xpath('//div[@class="campaign"]/a/@href')
-#band_country = ma_tree.xpath('//div[@class="campaign"]/a/@href')
-#print band_country
-#ma_request = urllib2.Request(ma_url, None, headers)
-#print ma_request
-#opener = urllib2.build_opener()
-#ma_data = opener.open(ma_request).read()
-#print ma_data
-#data = ma.read()
-#print data
-#request.get_full_url()
-#headers = { 'User-Agent' : 'Mozilla/5.0' }
-#req = urllib2.Request('metal-archives.com', None, headers)
-#html = urllib2.urlopen(req).read()
+page = requests.get(ma_url)
+tree = html.fromstring(page.content)
+ma_band_stats = tree.xpath('//div[@title="band_stats"]/text()')
+print ma_band_stats
+
+
+# md = Render(ma_url)
+# ma_data = md.frame.toHtml()
+# ma_formatted_result = str(ma_data.toAscii())
+
+# #Next build lxml tree from formatted_result
+# ma_tree = html.fromstring(ma_formatted_result)
+# band_country = tree.xpath('//div[@class="campaign"]/a/@href')
+# #band_country = ma_tree.xpath('//div[@class="campaign"]/a/@href')
+# print "band_country: ", band_country
+# ma_request = urllib2.Request(ma_url, None, headers)
+# print "ma_request:", ma_request
+# opener = urllib2.build_opener()
+# ma_data = opener.open(ma_request).read()
+# print ma_data
+# #data = ma.read()
+# #print data
+# #request.get_full_url()
+# #headers = { 'User-Agent' : 'Mozilla/5.0' }
+# #req = urllib2.Request('metal-archives.com', None, headers)
+# #html = urllib2.urlopen(req).read()
