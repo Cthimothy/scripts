@@ -1,3 +1,4 @@
+#!/usr/local/env bash
 g=$1
 dirs=$(find . -maxdepth 1 -type d -printf '%P\n') # read directories in to var
 for d in $dirs; do
