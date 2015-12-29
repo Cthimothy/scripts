@@ -1,5 +1,4 @@
 #!/bin/bash
-# coverart.sh
 
 default_cover=; musicdir=; mfile=; fulldir=; covers=; trycovers=
 clear
