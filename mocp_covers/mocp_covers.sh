@@ -17,29 +17,26 @@ mfile=$(mocp --format "%file")
 if [ -n "$mfile" ]; then
     fulldir=$(dirname "$mfile")
 fi
-
 if [ -n "$fulldir" ]; then
     covers=$(ls "$fulldir" | grep "\.jpg\|\.png\|\.gif")
 fi    
-
 if [ -z "$covers" ]; then
-	covers="$default_cover"
+    covers="$default_cover"
 else
-	#trycovers=`echo "$covers" | grep -i "_cover\|front\|folder\|front\|albumart" | head -n 1`
-	trycovers=$(echo "$covers" | grep -i "_cover\|front\|folder\|front" | head -n 1)
-	if [ -z "$trycovers" ]; then
-		trycovers=$(echo "$covers" | head -n 1)
-		if [ -z "$trycovers" ]; then
-		    trycovers="$default_cover"
-		else
-		    trycovers="$fulldir/$trycovers"
-		fi
-	else
-	    trycovers="$fulldir/$trycovers"
-	fi
-	covers="$trycovers"
+    #trycovers=`echo "$covers" | grep -i "_cover\|front\|folder\|front\|albumart" | head -n 1`
+    trycovers=$(echo "$covers" | grep -i "_cover\|front\|folder\|front" | head -n 1)
+    if [ -z "$trycovers" ]; then
+        trycovers=$(echo "$covers" | head -n 1)
+        if [ -z "$trycovers" ]; then
+            trycovers="$default_cover"
+        else
+            trycovers="$fulldir/$trycovers"
+        fi
+    else
+        trycovers="$fulldir/$trycovers"
+    fi
+    covers="$trycovers"
 fi
-
 
 if [ ! -f "$covers" ]; then
     echo "[+]Album art not found..."
