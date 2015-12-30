@@ -2,48 +2,22 @@
 
 ## TODO check for existence of mp3 tags
 
-default_cover=; musicdir=; mfile=; fulldir=; covers=; trycovers=
-foo=; slash=; front=; mocp_album_path=; artist=; album=; glurk=; cover_file_name=
+mfile=; fulldir=; foo=; slash=; front=; mocp_album_path=; artist=; album=; glurk=;
+slash="/"
+front="front.jpg"
 clear
-
-default_cover="/path/to/defaultcover.png"
-musicdir="/media/music/albums/"
-musicdir=${musicdir:16}
-musicdir=${musicdir%/$}
-
-mfile=${mfile%/*}
-mfile=${mfile%/$}
-fulldir="$musicdir/$mfile"
 
 mfile=$(mocp --format "%file")
 if [ -n "$mfile" ]; then
     fulldir=$(dirname "$mfile")
 fi
-if [ -n "$fulldir" ]; then
-    covers=$(find "$fulldir" \*.jpg -o \*.png -o \*.gif -print)
-fi    
-if [ -z "$covers" ]; then
-    covers="$default_cover"
-else
-    #trycovers=`echo "$covers" | grep -i "_cover\|front\|folder\|front\|albumart" | head -n 1`
-    trycovers=$(echo "$covers" | grep -i "_cover\|front\|folder\|front" | head -n 1)
-    if [ -z "$trycovers" ]; then
-        trycovers=$(echo "$covers" | head -n 1)
-        if [ -z "$trycovers" ]; then
-            trycovers="$default_cover"
-        else
-            trycovers="$fulldir/$trycovers"
-        fi
-    else
-        trycovers="$fulldir/$trycovers"
-    fi
-    covers="$trycovers"
+mocp_album_art=$fulldir$slash$front
 fi
 
-if [ ! -f "$covers" ]; then
-    echo "[+]Album art not found..."
-    slash="/"
-    front="front.jpg"
+if [ -f "$mocp_album_art" ]; then
+    feh "$mocp_album_art"
+else
+    echo "[+] Album art not found..."
     #foo=$(mocp -i|grep 'File:'|cut -d '/' -f2-6)
     test_dir=$(mocp -i|grep 'File:'|cut -d '/' -f6)
     if [ "$test_dir" == "___0SDM-Demos" ] ; then
@@ -60,8 +34,7 @@ if [ ! -f "$covers" ]; then
     cover_file_name="${glurk%?}"
     mv "$cover_file_name" "$mocp_album_path$slash$front"
     echo "[+] Done."
+    mocp_album_art="$mocp_album_path$front"
     clear
-    feh "$mocp_album_path$slash$front"
-else
-    feh "$covers"
+    feh "$mocp_album_art"
 fi
