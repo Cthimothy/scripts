@@ -10,13 +10,15 @@ clear
 mfile=$(mocp --format "%file")
 if [ -n "$mfile" ]; then
     fulldir=$(dirname "$mfile")
+else
+    read -p "[-] No MP3 tags! Cannot get album information... press a key to return."
 fi
 mocp_album_art=$fulldir$slash$front
 other_covers=$(find "$fulldir" -type f \( ! -iname front.jpg -iname \*.jpg -o -iname \*.gif -o -iname \*.png \))
 
 if [ -f "$mocp_album_art" ]; then
     feh "$mocp_album_art"
-    if [ -z "$other_covers" ]; then
+    if [ ! -z "$other_covers" ]; then
         feh "$other_covers"
     fi
 else
