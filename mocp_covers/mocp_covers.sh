@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## TODO check for existence of mp3 tags
+
 default_cover=; musicdir=; mfile=; fulldir=; covers=; trycovers=
 foo=; slash=; front=; mocp_album_path=; artist=; album=; glurk=; cover_file_name=
 clear
@@ -18,7 +20,7 @@ if [ -n "$mfile" ]; then
     fulldir=$(dirname "$mfile")
 fi
 if [ -n "$fulldir" ]; then
-    covers=$(ls "$fulldir" | grep "\.jpg\|\.png\|\.gif")
+    covers=$(find "$fulldir" \*.jpg -o \*.png -o \*.gif -print)
 fi    
 if [ -z "$covers" ]; then
     covers="$default_cover"
