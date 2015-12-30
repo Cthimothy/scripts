@@ -30,14 +30,13 @@ else
 	if [ -z "$trycovers" ]; then
 		trycovers=$(echo "$covers" | head -n 1)
 		if [ -z "$trycovers" ]; then
-			trycovers="$default_cover"
+		    trycovers="$default_cover"
 		else
-			trycovers="$fulldir/$trycovers"
+		    trycovers="$fulldir/$trycovers"
 		fi
 	else
-		trycovers="$fulldir/$trycovers"
+	    trycovers="$fulldir/$trycovers"
 	fi
-
 	covers="$trycovers"
 fi
 
