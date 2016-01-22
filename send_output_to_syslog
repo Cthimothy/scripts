@@ -1,0 +1,1 @@
+1> >(logger -s -t $(basename $0)) 2>&1
